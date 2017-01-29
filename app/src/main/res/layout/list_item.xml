@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="50dp" android:descendantFocusability="blocksDescendants"
+    android:padding="10dp">
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/textViewListItemName"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="row number"/>
+
+    <ImageButton
+
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerInside"
+        android:layout_centerVertical="true"
+        android:id="@+id/imageButtonListItemOptions"
+        android:background="@drawable/popup_button"
+        android:layout_width="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
+
+
+</RelativeLayout>

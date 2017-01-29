@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="points_array">
+        <item>5 (Light)</item>
+        <item>10 (Medium)</item>
+        <item>20 (Intense)</item>
+    </string-array>
+
+</resources>

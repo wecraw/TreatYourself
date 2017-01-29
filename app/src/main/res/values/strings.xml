@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Treat Yourself</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="timed_button">Timed</string>
+    <string name="untimed_button">Untimed</string>
+    <string name="earns_button">Earns Points</string>
+    <string name="spends_button">Spends Points</string>
+    <string name="untimed_earns_value">How many points is this activity worth?</string>
+    <string name="untimed_spends_value">How many points does this activity cost?</string>
+    <string name="timed_spends_value">How many points does 30 minutes is this activity cost?</string>
+    <string name="timed_earns_value">How many points is 30 minutes of this activity worth?</string>
+    <string name="success_message">Success! Created activity with:</string>
+    <string name="success_title">Success</string>
+    <string name="welcome">Welcome to Treat Yourself!</string>
+    <string name="insufficient">Insufficient funds!</string>
+    <string name="total_earned">Total points earned:</string>
+    <string name="total_spent">Total points spent:</string>
+    <string name="submit">Submit</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete event</string>
+    <string name="confirm">Are you sure you\'d like to delete the event \"%1$s\"?</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="view_log">View Log</string>
+    <string name="undo_last_event">Undo Last Entry</string>
+    <string name="new_event">New Event</string>
+    <string name="todo_list">Todo List</string>
+</resources>
