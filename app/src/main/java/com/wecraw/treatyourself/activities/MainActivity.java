@@ -8,16 +8,26 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
+import android.widget.TextView;
 
+import com.wecraw.treatyourself.DatabaseOperations;
 import com.wecraw.treatyourself.R;
+import com.wecraw.treatyourself.User;
 
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences mPrefs;
+    private TextView textViewUserName;
     private Button buttonLogEvent;
     private Button buttonUserDetail;
     private Button buttonTodo;
     private Button buttonNewEvent;
+    private User user;
+
+
+    DatabaseOperations db = new DatabaseOperations(this);
+
 
     final String welcomeScreenShownPref = "welcomeScreenShown";
 
@@ -30,13 +40,18 @@ public class MainActivity extends AppCompatActivity {
         buttonUserDetail = (Button) findViewById(R.id.buttonUserDetail);
         buttonTodo = (Button) findViewById(R.id.buttonTodo);
         buttonNewEvent = (Button) findViewById(R.id.buttonCreateEvent);
+        textViewUserName = (TextView) findViewById(R.id.textViewHey);
 
         //font stuff
-        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/abeezee.italic.ttf");
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/menu_font.ttf");
         buttonNewEvent.setTypeface(myTypeface);
         buttonUserDetail.setTypeface(myTypeface);
         buttonTodo.setTypeface(myTypeface);
         buttonLogEvent.setTypeface(myTypeface);
+
+        //myTypeface = Typeface.createFromAsset(getAssets(), "fonts/hey_user_font.ttf");
+        textViewUserName.setTypeface(myTypeface);
+
 
 
         //used to show welcome/signup screen on first launch
@@ -52,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putBoolean(welcomeScreenShownPref, true);
-            editor.commit(); // Very important to save the preference
+            editor.apply(); // Very important to save the preference
+                            //user editor.commit(); if this gets weird
         }
+
+        textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
+
 
     }
 

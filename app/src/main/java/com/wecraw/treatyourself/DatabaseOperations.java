@@ -277,7 +277,6 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         Log.d("addNewLogEntry()", logEntry.toString());
     }
 
-
     public LogEntry getLogEntry(int id){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -333,6 +332,24 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         Log.d("getAllLogEntries()", logEntries.toString());
 
         return logEntries;
+    }
+
+    public void deleteLogEntry(LogEntry logEntry) {
+
+        // 1. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 2. delete
+        db.delete(TABLE_LOGENTRY_DETAIL, //table name
+                ID+" = ?",  // selections
+                new String[] { String.valueOf(logEntry.getId()) }); //selections args
+
+        // 3. close
+        db.close();
+
+        //log
+        Log.d("deleteLogEntry", logEntry.toString());
+
     }
 
 }

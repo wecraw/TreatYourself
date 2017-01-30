@@ -20,7 +20,8 @@
         <activity android:name=".activities.EventDetailActivity" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.UserProfileActivity" />
-        <activity android:name=".activities.UserLogActivity"></activity>
+        <activity android:name=".activities.UserLogActivity" />
+        <activity android:name=".activities.TodoActivity"></activity>
     </application>
 
 </manifest>

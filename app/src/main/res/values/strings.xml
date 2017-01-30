@@ -18,10 +18,12 @@
     <string name="submit">Submit</string>
     <string name="update">Update</string>
     <string name="delete">Delete event</string>
-    <string name="confirm">Are you sure you\'d like to delete the event \"%1$s\"?</string>
+    <string name="confirm_delete">Are you sure you\'d like to delete the event \"%1$s\"?</string>
     <string name="your_profile">Your Profile</string>
     <string name="view_log">View Log</string>
     <string name="undo_last_event">Undo Last Entry</string>
     <string name="new_event">New Event</string>
     <string name="todo_list">Todo List</string>
+    <string name="confirm_undo">Are you sure you\'d like to undo the most recent event? All points will be refunded.</string>
+    <string name="undo">Undo Event</string>
 </resources>

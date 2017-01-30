@@ -180,7 +180,7 @@ public class LogEventActivity extends AppCompatActivity {
                                     }
                                 };
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LogEventActivity.this);
-                                builder.setMessage(String.format(getString(R.string.confirm), names.get(position)))
+                                builder.setMessage(String.format(getString(R.string.confirm_delete), names.get(position)))
                                         .setTitle(R.string.delete)
                                         .setPositiveButton("Yes", dialogClickListener)
                                         .setNegativeButton("No", dialogClickListener).show();

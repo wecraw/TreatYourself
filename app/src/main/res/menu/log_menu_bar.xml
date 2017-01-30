@@ -9,6 +9,7 @@
         android:title="@string/undo_last_event"
         android:orderInCategory="100"
         android:icon="@drawable/undo_icon"
+        android:onClick="undoLastLogEntry"
         app:showAsAction="always"/>
 
 </menu>

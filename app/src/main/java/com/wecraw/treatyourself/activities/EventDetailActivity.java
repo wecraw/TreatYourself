@@ -178,8 +178,6 @@ public class EventDetailActivity extends AppCompatActivity {
 
             db.addNewLogEntry(logEntry);
 
-            db.addNewLogEntry(logEntry);
-
             finish();
 
         } else {

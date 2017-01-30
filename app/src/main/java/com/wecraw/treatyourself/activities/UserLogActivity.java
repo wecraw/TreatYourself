@@ -25,8 +25,10 @@ import com.wecraw.treatyourself.DatabaseOperations;
 import com.wecraw.treatyourself.Event;
 import com.wecraw.treatyourself.LogEntry;
 import com.wecraw.treatyourself.R;
+import com.wecraw.treatyourself.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserLogActivity extends AppCompatActivity {
@@ -37,10 +39,13 @@ public class UserLogActivity extends AppCompatActivity {
     List<String> names = new ArrayList<String>();
     List<Integer> ids = new ArrayList<Integer>();
 
+    private User user;
+
     ArrayAdapter<String> adapter;
 
     private ListView lv;
 
+    //for custom action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -53,10 +58,11 @@ public class UserLogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_log);
 
+        user = db.getUser(1);
+
         lv = (ListView) findViewById(R.id.listViewLog);
 
         populateListView();
-
     }
 
     private void populateListView(){
@@ -69,12 +75,14 @@ public class UserLogActivity extends AppCompatActivity {
         LogEntry logEntry;
 
         //populates in reverse so that the list is sorted by date
-        Log.d("size of logEntries is " + logEntries.size(),"test");
-        //for (int i=logEntries.size()-1; i>=0; i--){
+        //Log.d("size of logEntries is " + logEntries.size(),"test");
+       // for (int i=logEntries.size()-1; i>=0; i--){
         for (int i=0; i<logEntries.size(); i++){
             names.add(i, logEntries.get(i).getName());
             ids.add(i,logEntries.get(i).getId());
         }
+        Collections.reverse(names);
+        Collections.reverse(ids);
 
 
         lv.setAdapter(new UserLogActivity.CustomAdapter(this, R.layout.list_item, names, this));
@@ -86,22 +94,17 @@ public class UserLogActivity extends AppCompatActivity {
                 int eventID = ids.get(position);
             }
 
-
-
         });
 
     }
+
+    //arrayadapter for the listview
     public class CustomAdapter extends ArrayAdapter<String>{
         private int layout;
         private List<String> mObjects;
         private final Context context;
         private final Activity activity;
-       // private final List list;
 
-        //public CustomAdapter(Activity activity, ArrayList<String> list) {
-        //    this.activity = activity;
-        //    this.list = list;
-       // }
         private CustomAdapter(Context context, int resource, List<String> objects, Activity activity) {
             super(context,resource,objects);
             mObjects = objects;
@@ -137,8 +140,6 @@ public class UserLogActivity extends AppCompatActivity {
 
             /** Set data to your Views. */
 
-            //LogEntry logEntry = db.getLogEntry(position);
-
             view.name.setText(logEntry.getName());
             if (logEntry.isTimed()){
                 view.duration.setText(Integer.toString(logEntry.getDuration())+" minutes");
@@ -153,9 +154,51 @@ public class UserLogActivity extends AppCompatActivity {
             return rowView;
         }
     }
+
     protected static class ViewHolder{
         protected TextView name;
         protected TextView duration;
         protected TextView value;
     }
+
+    public void undoLastLogEntry(MenuItem item){
+        if (logEntries.size()>0) {
+
+
+            final int mostRecentLogEntryID = ids.get(0);
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            LogEntry mostRecentLogEntry = db.getLogEntry(mostRecentLogEntryID);
+                            db.deleteLogEntry(mostRecentLogEntry);
+                            //takes away points if the event earns and refunds otherwise
+                            if(mostRecentLogEntry.isEarns()){
+                                user.setPoints(user.getPoints() - mostRecentLogEntry.getValue());
+                            } else {
+                                user.setPoints(user.getPoints() + mostRecentLogEntry.getValue());
+                            }
+                            db.updateUser(user);
+
+                            populateListView();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserLogActivity.this);
+            builder.setMessage(R.string.confirm_undo)
+                    .setTitle(R.string.undo)
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+
+        }
+    }
+
 }

@@ -43,6 +43,16 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    //refreshes activity, mostly important for when a log entry is undone
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        //Refresh your stuff here
+        user = db.getUser(1);
+        textViewPoints.setText(Long.toString(user.getPoints()));
+    }
+
     public void viewLog(View view) {
         Intent intent = new Intent(this, UserLogActivity.class);
         startActivity(intent);

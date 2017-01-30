@@ -12,6 +12,7 @@
     <color name="black">#000000</color>
     <color name="points_red">#cc0000</color>
     <color name="points_green">#006400</color>
+    <color name="grey">#BDBDBD</color>
     
 
 </resources>
