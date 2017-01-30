@@ -90,5 +90,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
+    public void todo(View view) {
+        Intent intent = new Intent(this, TodoListActivity.class);
+        startActivity(intent);
+    }
 
 }
