@@ -6,6 +6,8 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="com.wecraw.treatyourself.activities.NewEventActivity"
     android:weightSum="1">
 

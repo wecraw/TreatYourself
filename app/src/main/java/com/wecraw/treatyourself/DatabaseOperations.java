@@ -2,6 +2,7 @@ package com.wecraw.treatyourself;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -173,13 +174,15 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         values.put(TIME_CREATED, event.getTimeCreated());
 
         // 3. updating row
-        int i = db.update(TABLE_USER_DETAIL, //table
+        int i = db.update(TABLE_EVENT_DETAIL, //table
                 values, // column/value
                 ID+" = ?", // selections
                 new String[] { String.valueOf(event.getId()) }); //selection args
 
         // 4. close
         db.close();
+
+        Log.d("updated event " + event.getName(), ""+i);
 
         return i;
 
@@ -271,6 +274,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         //inserting row
         db.insert(TABLE_LOGENTRY_DETAIL, null, values);
         db.close(); //closes database connection
+        Log.d("addNewLogEntry()", logEntry.toString());
     }
 
 

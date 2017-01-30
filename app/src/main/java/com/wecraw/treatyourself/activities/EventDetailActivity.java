@@ -158,17 +158,49 @@ public class EventDetailActivity extends AppCompatActivity {
 
     public void submit(View view){
 
+        LogEntry logEntry = new LogEntry();
+
         if (earns) {
             user.setPoints(user.getPoints() + total);
             db.updateUser(user);
-            createLogEntry();
+            logEntry.setName(eventName);
+            if (timed) {
+                logEntry.setDuration(Integer.parseInt(editTextTime.getText().toString()));
+            } else {
+                logEntry.setDuration(0);
+            }
+
+            logEntry.setValue((int) total);
+            logEntry.setTimed(event.isTimed());
+            long time = System.currentTimeMillis();
+            logEntry.setTimeCreated(time);
+            logEntry.setEarns(event.isEarns());
+
+            db.addNewLogEntry(logEntry);
+
+            db.addNewLogEntry(logEntry);
+
             finish();
 
         } else {
             if ((user.getPoints() - total) >= 0 ){
                 user.setPoints(user.getPoints() - total);
                 db.updateUser(user);
-                createLogEntry();
+                logEntry.setName(eventName);
+                if (timed) {
+                    logEntry.setDuration(Integer.parseInt(editTextTime.getText().toString()));
+                } else {
+                    logEntry.setDuration(0);
+                }
+
+                logEntry.setValue((int) total);
+                logEntry.setTimed(event.isTimed());
+                long time = System.currentTimeMillis();
+                logEntry.setTimeCreated(time);
+                logEntry.setEarns(event.isEarns());
+
+                db.addNewLogEntry(logEntry);
+
                 finish();
             } else {
                 Toast.makeText(getBaseContext(), R.string.insufficient , Toast.LENGTH_SHORT ).show();

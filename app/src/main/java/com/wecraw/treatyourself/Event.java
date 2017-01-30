@@ -14,13 +14,22 @@ public class Event {
     private long timeCreated;
     private int id;
 
-    //basic ctor
+    //ctor for NEW EVENT - doesn't take ID as arg
     public Event(String name, boolean timed, boolean earns, int value, long timeCreated){
         this.name=name;
         this.timed=timed;
         this.earns=earns;
         this.value=value;
         this.timeCreated=timeCreated;
+    }
+    //ctor for UPDATING EVENT - takes ID as arg
+    public Event(int id, String name, boolean timed, boolean earns, int value, long timeCreated){
+        this.name=name;
+        this.timed=timed;
+        this.earns=earns;
+        this.value=value;
+        this.timeCreated=timeCreated;
+        this.id=id;
     }
 
     //default ctor

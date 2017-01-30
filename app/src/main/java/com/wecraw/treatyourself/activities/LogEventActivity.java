@@ -57,13 +57,19 @@ public class LogEventActivity extends AppCompatActivity {
     }
 
 
+    //refreshes activity, mostly important for when an event is edited
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        //Refresh your stuff here
+        populateListView();
+    }
 
     //loads events into listview
     private void populateListView(){
 
-        //List<Event> events = new ArrayList<Event>();
-        //final List<String> names = new ArrayList<String>();
-        //final List<Integer> ids = new ArrayList<Integer>();
+
         names.clear();
         ids.clear();
         events.clear();

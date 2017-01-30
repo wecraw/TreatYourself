@@ -119,7 +119,7 @@ public class NewEventActivity extends AppCompatActivity {
 
             buttonSubmit.setText(R.string.update);
 
-            //used when submitting
+            //used when submitting an update to existing entry
             update = true;
 
         }
@@ -152,42 +152,28 @@ public class NewEventActivity extends AppCompatActivity {
 
         //if new event, gets system time, otherwise uses the original creation time
         long time;
+        int id = 0;
         if (!update) {
             time = System.currentTimeMillis();
         } else {
             time = event.getTimeCreated();
+            id = event.getId();
         }
 
-        Event newEvent = new Event(name, timed, earns, value, time);
+
+
+
 
         //creates or updates event
         if (!update) {
+            Event newEvent = new Event(name, timed, earns, value, time);
             db.addNewEvent(newEvent);
         } else {
+            Event newEvent = new Event(id, name, timed, earns, value, time);
             db.updateEvent(newEvent);
         }
 
         finish();
-
-        /*alert to display details on the created event, used for testing
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewEventActivity.this);
-        builder.setMessage(getString(R.string.success_message) + "\n" + "Name: " + EventArray.events[i].getName()
-                + "\nTimed: " + EventArray.events[i].isTimed() + "\nEarns: " + EventArray.events[i].isEarns()
-                + "\nValue: " + EventArray.events[i].getValue() + "\nCreated At: " + EventArray.events[i].getTimeCreated()
-                + "\nID: " + EventArray.events[i].getId())
-                .setTitle(R.string.success_title)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        */
-
 
     }
 
