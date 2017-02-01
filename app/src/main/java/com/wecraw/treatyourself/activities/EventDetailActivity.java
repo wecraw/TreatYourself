@@ -35,7 +35,6 @@ import static java.lang.Math.toIntExact;
 public class EventDetailActivity extends AppCompatActivity {
 
     private Event event;
-    private String eventName;
     private User user;
     private LogEntry logEntry;
     private TextView textViewTitle;
@@ -51,6 +50,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private boolean timed;
     private boolean earns;
+    private boolean quickEvent = false;
 
     //used to check for empty fields on edit text change, also updates total
     private TextWatcher textWatcher = new TextWatcher() {
@@ -91,9 +91,12 @@ public class EventDetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null){
-            eventName = extras.getString("event name");
             int eventID = extras.getInt("event id");
             event = db.getEvent(eventID);
+            if (getIntent().hasExtra("quickEvent")){
+                quickEvent = extras.getBoolean("quickEvent");
+                db.deleteEvent(event); //deletes the temporary quick event from SQLite db
+            }
         }
 
 
@@ -144,7 +147,6 @@ public class EventDetailActivity extends AppCompatActivity {
             textViewTotalText.setText(R.string.total_spent);
         }
 
-
     }
 
     private void checkFieldsForEmptyValues() {
@@ -163,7 +165,7 @@ public class EventDetailActivity extends AppCompatActivity {
         if (earns) {
             user.setPoints(user.getPoints() + total);
             db.updateUser(user);
-            logEntry.setName(eventName);
+            logEntry.setName(event.getName());
             if (timed) {
                 logEntry.setDuration(Integer.parseInt(editTextTime.getText().toString()));
             } else {
@@ -184,7 +186,7 @@ public class EventDetailActivity extends AppCompatActivity {
             if ((user.getPoints() - total) >= 0 ){
                 user.setPoints(user.getPoints() - total);
                 db.updateUser(user);
-                logEntry.setName(eventName);
+                logEntry.setName(event.getName());
                 if (timed) {
                     logEntry.setDuration(Integer.parseInt(editTextTime.getText().toString()));
                 } else {
@@ -203,27 +205,6 @@ public class EventDetailActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getBaseContext(), R.string.insufficient , Toast.LENGTH_SHORT ).show();
             }
-
         }
-
-
     }
-
-    public void createLogEntry(){
-        LogEntry logEntry = new LogEntry();
-        logEntry.setName(eventName);
-        logEntry.setDuration(Integer.parseInt(editTextTime.getText().toString()));
-        logEntry.setValue((int) total);
-        logEntry.setTimed(event.isTimed());
-        long time = System.currentTimeMillis();
-        logEntry.setTimeCreated(time);
-        logEntry.setEarns(event.isEarns());
-
-        db.addNewLogEntry(logEntry);
-
-    }
-
-
-
-
 }

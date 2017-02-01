@@ -2,6 +2,7 @@ package com.wecraw.treatyourself.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +25,7 @@ import com.wecraw.treatyourself.R;
 
 import java.io.FileOutputStream;
 import java.lang.reflect.Array;
+import java.util.List;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -36,9 +38,11 @@ public class NewEventActivity extends AppCompatActivity {
     private Button buttonEarns;
     private Button buttonSpends;
     private TextView value_explain;
+    private TextView quick_event_explain;
     private Spinner spinnerValue;
     private Event event;
     private boolean update = false;
+    private boolean quickEvent = false;
 
 
     private static boolean timed = true;
@@ -77,6 +81,7 @@ public class NewEventActivity extends AppCompatActivity {
         buttonUntimed = (Button) findViewById(R.id.buttonUntimed);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         value_explain = (TextView) findViewById(R.id.value_explain);
+        quick_event_explain = (TextView) findViewById(R.id.textViewQuickEventExplain);
 
         //setting up the spinner
         spinnerValue = (Spinner) findViewById(R.id.spinnerValue);
@@ -88,42 +93,55 @@ public class NewEventActivity extends AppCompatActivity {
         etName.addTextChangedListener(textWatcher);
 
         //handles extras if this activity is launched from the edit dialogue of LogEventActivity
+        //or when the event is a quick event
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
+        if (extras != null) {
+            //if the intent has the extra quickevent, it wont have any others
+            if (getIntent().hasExtra("quickEvent")) {
+                quickEvent = extras.getBoolean("quickEvent");
+                setTitle(getString(R.string.quick_event_title));
+                quick_event_explain.setVisibility(View.VISIBLE);
 
-            //get event
-            int eventID = extras.getInt("event id");
-            event = db.getEvent(eventID);
-
-            //sets name edittext, spinner, button positions, submit button text
-            etName.setText(event.getName());
-
-            if (event.getValue()== GlobalConstants.VALUE_LOW){
-                spinnerValue.setSelection(0);
-            } else if (event.getValue()==GlobalConstants.VALUE_MID){
-                spinnerValue.setSelection(1);
-            } else if (event.getValue()==GlobalConstants.VALUE_HIGH){
-                spinnerValue.setSelection(2);
-            }
-
-            if (event.isEarns()){
-                earns(buttonEarns);
             } else {
-                spends(buttonSpends);
+
+                //get event
+                int eventID = extras.getInt("event id");
+                event = db.getEvent(eventID);
+
+                //sets name edittext, spinner, button positions, submit button text
+                etName.setText(event.getName());
+
+                if (event.getValue() == GlobalConstants.VALUE_LOW) {
+                    spinnerValue.setSelection(0);
+                } else if (event.getValue() == GlobalConstants.VALUE_MID) {
+                    spinnerValue.setSelection(1);
+                } else if (event.getValue() == GlobalConstants.VALUE_HIGH) {
+                    spinnerValue.setSelection(2);
+                }
+
+                if (event.isEarns()) {
+                    earns(buttonEarns);
+                } else {
+                    spends(buttonSpends);
+                }
+                if (event.isTimed()) {
+                    timed(buttonTimed);
+                } else {
+                    untimed(buttonUntimed);
+                }
+
+                buttonSubmit.setText(R.string.update);
+
+                //used when submitting an update to existing entry
+                update = true;
+
+                setTitle(getString(R.string.edit_event_title));
+
             }
-            if (event.isTimed()){
-                timed(buttonTimed);
-            } else {
-                untimed(buttonUntimed);
-            }
 
-            buttonSubmit.setText(R.string.update);
-
-            //used when submitting an update to existing entry
-            update = true;
-
+        } else { //if there aren't any extras, it's a plain new event, set action bar text accordingly
+            setTitle(getString(R.string.new_event_title));
         }
-
 
 
 
@@ -160,20 +178,29 @@ public class NewEventActivity extends AppCompatActivity {
             id = event.getId();
         }
 
-
-
-
-
         //creates or updates event
+
         if (!update) {
             Event newEvent = new Event(name, timed, earns, value, time);
             db.addNewEvent(newEvent);
+
+            //easiest way to handle passing to event detail is to pass an event ID that is read from db
+            //so for a quick event, the event IS saved to the database but is deleted in event detail
+            //after the activity is initialized
+            if (quickEvent){
+                Intent intent = new Intent(NewEventActivity.this, EventDetailActivity.class);
+                intent.putExtra("quickEvent", true); //so event detail will know to delete
+                List<Event> temp = db.getAllEvents(); //janky way to get the ID of the event that was just created
+                intent.putExtra("event id", temp.get(temp.size()-1).getId());
+                startActivity(intent);
+            } else {
+                finish(); //finish needs to be outside of quickevent response in case the back button is pressed
+            }
         } else {
             Event newEvent = new Event(id, name, timed, earns, value, time);
             db.updateEvent(newEvent);
+            finish();
         }
-
-        finish();
 
     }
 

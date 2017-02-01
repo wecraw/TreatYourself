@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,14 @@ public class LogEventActivity extends AppCompatActivity {
 
     private ListView lv;
 
+    //for custom action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_event_menu_bar, menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,15 +69,14 @@ public class LogEventActivity extends AppCompatActivity {
 
     //refreshes activity, mostly important for when an event is edited
     @Override
-    public void onResume()
-    {  // After a pause OR at startup
+    public void onResume() {  // After a pause OR at startup
         super.onResume();
         //Refresh your stuff here
         populateListView();
     }
 
     //loads events into listview
-    private void populateListView(){
+    private void populateListView() {
 
 
         names.clear();
@@ -76,18 +85,18 @@ public class LogEventActivity extends AppCompatActivity {
 
         events = db.getAllEvents();
 
-        int j=0;
-        if(earns){
-            for(int i=0; i<(events.size()); i++){
-                if(events.get(i).isEarns()){
+        int j = 0;
+        if (earns) {
+            for (int i = 0; i < (events.size()); i++) {
+                if (events.get(i).isEarns()) {
                     names.add(j, events.get(i).getName());
                     ids.add(j, events.get(i).getId());
                     j++;
                 }
             }
         } else {
-            for(int i=0; i<(events.size()); i++){
-                if(!events.get(i).isEarns()){
+            for (int i = 0; i < (events.size()); i++) {
+                if (!events.get(i).isEarns()) {
                     names.add(j, events.get(i).getName());
                     ids.add(j, events.get(i).getId());
                     j++;
@@ -104,17 +113,13 @@ public class LogEventActivity extends AppCompatActivity {
                 int eventID = ids.get(position);
 
                 Intent intent = new Intent(LogEventActivity.this, EventDetailActivity.class);
-                intent.putExtra("event name", eventName);
                 intent.putExtra("event id", eventID);
                 startActivity(intent);
 
             }
 
 
-
         });
-
-
 
 
     }
@@ -124,8 +129,9 @@ public class LogEventActivity extends AppCompatActivity {
 
         private int layout;
         private List<String> mObjects;
+
         private CustomAdapter(Context context, int resource, List<String> objects) {
-            super(context,resource,objects);
+            super(context, resource, objects);
             mObjects = objects;
             layout = resource;
         }
@@ -133,7 +139,7 @@ public class LogEventActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder mainViewholder = null;
-            if(convertView == null){
+            if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
                 ViewHolder viewHolder = new ViewHolder();
@@ -149,7 +155,7 @@ public class LogEventActivity extends AppCompatActivity {
                     PopupMenu popup = new PopupMenu(getContext(), v);
                     //Inflating the Popup using xml file
                     popup.getMenuInflater()
-                            .inflate(R.menu.popup_menu, popup.getMenu());
+                            .inflate(R.menu.popup_menu_edit_delete, popup.getMenu());
 
                     //registering popup with OnMenuItemClickListener
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -157,15 +163,15 @@ public class LogEventActivity extends AppCompatActivity {
 
                             int posMenu = item.getItemId();
 
-                            if (posMenu == R.id.popupEdit){
+                            if (posMenu == R.id.popupEdit) {
                                 Intent intent = new Intent(LogEventActivity.this, NewEventActivity.class);
                                 intent.putExtra("event id", ids.get(position));
                                 startActivity(intent);
-                            } else if (posMenu == R.id.popupDelete){
+                            } else if (posMenu == R.id.popupDelete) {
                                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        switch (which){
+                                        switch (which) {
                                             case DialogInterface.BUTTON_POSITIVE:
                                                 //Yes button clicked
                                                 int eventID = ids.get(position);
@@ -200,14 +206,12 @@ public class LogEventActivity extends AppCompatActivity {
         }
 
     }
+
     //helper class for arrayadapter
     public class ViewHolder {
         TextView title;
         ImageButton button;
     }
-
-
-
 
 
     //radio button behavior
@@ -220,9 +224,10 @@ public class LogEventActivity extends AppCompatActivity {
         buttonSpends.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonSpends.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-        earns=true;
+        earns = true;
         populateListView();
     }
+
     public void spends(View view) {
 
         buttonSpends.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
@@ -231,8 +236,39 @@ public class LogEventActivity extends AppCompatActivity {
         buttonEarns.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonEarns.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-        earns=false;
+        earns = false;
 
         populateListView();
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // ...
+
+        View menuItemView = findViewById(R.id.action_sign_out); // SAME ID AS MENU ID
+        PopupMenu popupMenu = new PopupMenu(this, menuItemView);
+        popupMenu.inflate(R.menu.popup_menu_new_event);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                int posMenu = item.getItemId();
+
+                if (posMenu == R.id.popupNewEvent) {
+                    Intent intent = new Intent(LogEventActivity.this, NewEventActivity.class);
+                    startActivity(intent);
+                } else if (posMenu == R.id.popupAddQuickEvent) {
+                    Intent intent = new Intent(LogEventActivity.this, NewEventActivity.class);
+                    intent.putExtra("quickEvent", true);
+                    startActivity(intent);
+                }
+                return true;
+            }
+
+        });
+
+        popupMenu.show();
+
+        return true;
     }
 }

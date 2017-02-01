@@ -117,6 +117,14 @@
         android:onClick="createEvent"
         android:enabled="false" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewQuickEventExplain"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:text="@string/quick_event_detail"
+        android:visibility="invisible" />
 
 
 </LinearLayout>

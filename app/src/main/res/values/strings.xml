@@ -26,4 +26,8 @@
     <string name="todo_list">Todo List</string>
     <string name="confirm_undo">Are you sure you\'d like to undo the most recent event? All points will be refunded.</string>
     <string name="undo">Undo Event</string>
+    <string name="quick_event_title">Create New Quick Event</string>
+    <string name="new_event_title">Create New Event</string>
+    <string name="edit_event_title">Edit Event</string>
+    <string name="quick_event_detail">Quick events will be logged but not saved for future use! If you\'d like to create a reusable event, add a new event instead.</string>
 </resources>

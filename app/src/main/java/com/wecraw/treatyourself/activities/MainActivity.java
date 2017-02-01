@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonLogEvent;
     private Button buttonUserDetail;
     private Button buttonTodo;
-    private Button buttonNewEvent;
     private User user;
 
 
@@ -39,12 +38,10 @@ public class MainActivity extends AppCompatActivity {
         buttonLogEvent = (Button) findViewById(R.id.buttonLogEvent);
         buttonUserDetail = (Button) findViewById(R.id.buttonUserDetail);
         buttonTodo = (Button) findViewById(R.id.buttonTodo);
-        buttonNewEvent = (Button) findViewById(R.id.buttonCreateEvent);
         textViewUserName = (TextView) findViewById(R.id.textViewHey);
 
         //font stuff
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/menu_font.ttf");
-        buttonNewEvent.setTypeface(myTypeface);
         buttonUserDetail.setTypeface(myTypeface);
         buttonTodo.setTypeface(myTypeface);
         buttonLogEvent.setTypeface(myTypeface);
@@ -80,10 +77,6 @@ public class MainActivity extends AppCompatActivity {
     /* Called when the user clicks the Log Event button */
     public void logEvent(View view) {
         Intent intent = new Intent(this, LogEventActivity.class);
-        startActivity(intent);
-    }
-    public void newEvent(View view) {
-        Intent intent = new Intent(this, NewEventActivity.class);
         startActivity(intent);
     }
     public void yourProfile(View view) {
