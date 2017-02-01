@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
         textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
 
-
     }
 
 
