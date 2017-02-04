@@ -22,7 +22,6 @@ public class LogEntry {
         this.value = value;
     }
 
-
     public LogEntry() {}
 
     public String getName() {

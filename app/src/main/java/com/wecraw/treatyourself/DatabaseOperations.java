@@ -150,6 +150,37 @@ public class DatabaseOperations extends SQLiteOpenHelper {
 
     }
 
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<User>();
+
+        // 1. build the query
+        String query = "SELECT  * FROM " + TABLE_USER_DETAIL;
+
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        User user;
+        if (cursor.moveToFirst()) {
+            do {
+
+                user = new User();
+                user.setId(cursor.getInt(0));
+                user.setName(cursor.getString(1));
+                user.setPoints(cursor.getInt(2));
+                user.setTimeCreated(cursor.getInt(3));
+
+                // Add book to books
+                users.add(user);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("getAllUsers()", users.toString());
+
+        return users;
+    }
+
 //CRUD for events
 
     public void addNewEvent(Event event){
@@ -423,7 +454,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllEvents()", todos.toString());
+        Log.d("getAllTodos()", todos.toString());
 
         return todos;
     }
@@ -442,7 +473,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         db.close();
 
         //log
-        Log.d("deleteBook", todo.toString());
+        Log.d("deleteTodo", todo.toString());
 
     }
 
@@ -457,8 +488,8 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         Todo todo = new Todo();
         todo.setId(cursor.getInt(0));
         todo.setName(cursor.getString(1));
-        todo.setValue(cursor.getInt(4));
-        todo.setTimeCreated(cursor.getInt(5));
+        todo.setValue(cursor.getInt(2));
+        todo.setTimeCreated(cursor.getInt(3));
 
         Log.d("getTodo("+id+")", todo.toString());
 

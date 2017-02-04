@@ -15,6 +15,8 @@ import com.wecraw.treatyourself.DatabaseOperations;
 import com.wecraw.treatyourself.R;
 import com.wecraw.treatyourself.User;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences mPrefs;
@@ -35,6 +37,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //used to show welcome/signup screen on first launch
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // second argument is the default to use if the preference can't be found
+        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+
+        //instead of using prefs, app will just send to welcome screen if no users exist.
+        List<User> temp = db.getAllUsers();
+        if (temp.size()==0) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(welcomeScreenShownPref, true);
+            editor.apply(); // Very important to save the preference
+            //user editor.commit(); if this gets weird
+        }
+
+
         buttonLogEvent = (Button) findViewById(R.id.buttonLogEvent);
         buttonUserDetail = (Button) findViewById(R.id.buttonUserDetail);
         buttonTodo = (Button) findViewById(R.id.buttonTodo);
@@ -46,30 +68,22 @@ public class MainActivity extends AppCompatActivity {
         buttonTodo.setTypeface(myTypeface);
         buttonLogEvent.setTypeface(myTypeface);
 
-        //myTypeface = Typeface.createFromAsset(getAssets(), "fonts/hey_user_font.ttf");
+        myTypeface = Typeface.createFromAsset(getAssets(), "fonts/hey_font.ttf");
         textViewUserName.setTypeface(myTypeface);
 
 
 
-        //used to show welcome/signup screen on first launch
+        if (temp.size()!=0)
+            textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    }
 
-        // second argument is the default to use if the preference can't be found
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
-
-        if (!welcomeScreenShown){
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            startActivity(intent);
-
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.putBoolean(welcomeScreenShownPref, true);
-            editor.apply(); // Very important to save the preference
-                            //user editor.commit(); if this gets weird
-        }
-
+    //refreshes activity, mostly important for when a new user is created
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Refresh your stuff here
         textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
-
     }
 
 

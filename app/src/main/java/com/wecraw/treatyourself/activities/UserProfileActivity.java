@@ -45,12 +45,18 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //refreshes activity, mostly important for when a log entry is undone
     @Override
-    public void onResume()
-    {  // After a pause OR at startup
+    public void onResume() {// After a pause OR at startup
         super.onResume();
         //Refresh your stuff here
         user = db.getUser(1);
         textViewPoints.setText(Long.toString(user.getPoints()));
+    }
+
+    //saves user name
+    @Override public void onPause() {
+        super.onPause();
+        user.setName(editTextName.getText().toString());
+        db.updateUser(user);
     }
 
     public void viewLog(View view) {

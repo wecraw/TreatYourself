@@ -62,10 +62,7 @@ public class LogEventActivity extends AppCompatActivity {
         populateListView();
         buttonEarns = (Button) findViewById(R.id.buttonEarns);
         buttonSpends = (Button) findViewById(R.id.buttonSpends);
-
-
     }
-
 
     //refreshes activity, mostly important for when an event is edited
     @Override
@@ -104,7 +101,7 @@ public class LogEventActivity extends AppCompatActivity {
             }
         }
 
-        lv.setAdapter(new CustomAdapter(this, R.layout.list_item, names));
+        lv.setAdapter(new CustomAdapter(this, R.layout.list_item_log_event, names));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

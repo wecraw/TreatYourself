@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.wecraw.treatyourself.DatabaseOperations;
-import com.wecraw.treatyourself.Event;
 import com.wecraw.treatyourself.LogEntry;
 import com.wecraw.treatyourself.R;
 import com.wecraw.treatyourself.User;
@@ -85,7 +80,7 @@ public class UserLogActivity extends AppCompatActivity {
         Collections.reverse(ids);
 
 
-        lv.setAdapter(new UserLogActivity.CustomAdapter(this, R.layout.list_item, names, this));
+        lv.setAdapter(new UserLogActivity.CustomAdapter(this, R.layout.list_item_log_event, names, this));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -125,7 +120,7 @@ public class UserLogActivity extends AppCompatActivity {
             {
                 // Get a new instance of the row layout view
                 LayoutInflater inflater = activity.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.listrow, null);
+                rowView = inflater.inflate(R.layout.list_item_user_log, null);
 
                 // Hold the view objects in an object, that way the don't need to be "re-  finded"
                 view = new ViewHolder();

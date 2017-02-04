@@ -18,9 +18,11 @@
     <string name="submit">Submit</string>
     <string name="update">Update</string>
     <string name="delete">Delete event</string>
-    <string name="confirm_delete">Are you sure you\'d like to delete the event \"%1$s\"?</string>
+    <string name="confirm_delete" formatted="false">Are you sure you\'d like to delete the event \"%1$s\"?</string>
+    <string name="confirm_todo" formatted="false">Nice! Confirm %1$d event%2$s (+%3$d points)</string>
     <string name="your_profile">Your Profile</string>
     <string name="view_log">View Log</string>
+    <string name="todo_list_title">Your Todo List</string>
     <string name="undo_last_event">Undo Last Entry</string>
     <string name="new_event">New Event</string>
     <string name="todo_list">Todo List</string>
@@ -29,5 +31,6 @@
     <string name="quick_event_title">Create New Quick Event</string>
     <string name="new_event_title">Create New Event</string>
     <string name="edit_event_title">Edit Event</string>
+    <string name="todo_value_explain">How many points is this task worth?</string>
     <string name="quick_event_detail">Quick events will be logged but not saved for future use! If you\'d like to create a reusable event, add a new event instead.</string>
 </resources>

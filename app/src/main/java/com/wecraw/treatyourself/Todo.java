@@ -8,16 +8,14 @@ public class Todo {
 
     private String name;
     private int value;
-    private boolean earns;
     private long timeCreated;
     private int id;
 
     public Todo() {}
 
-    public Todo(String name, int value, boolean earns, int id, long timeCreated) {
+    public Todo(String name, int value, int id, long timeCreated) {
         this.name = name;
         this.value = value;
-        this.earns = earns;
         this.id = id;
         this.timeCreated = timeCreated;
     }
@@ -36,14 +34,6 @@ public class Todo {
 
     public void setValue(int value) {
         this.value = value;
-    }
-
-    public boolean isEarns() {
-        return earns;
-    }
-
-    public void setEarns(boolean earns) {
-        this.earns = earns;
     }
 
     public long getTimeCreated() {
