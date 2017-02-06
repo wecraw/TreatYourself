@@ -109,7 +109,7 @@ public class LogEventActivity extends AppCompatActivity {
                 String eventName = names.get(position);
                 int eventID = ids.get(position);
 
-                Intent intent = new Intent(LogEventActivity.this, EventDetailActivity.class);
+                Intent intent = new Intent(LogEventActivity.this, BoostedChoiceActivity.class);
                 intent.putExtra("event id", eventID);
                 startActivity(intent);
 

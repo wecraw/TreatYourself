@@ -4,8 +4,13 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorButtonClicked">#303f9f</color>
-    <drawable name="homeButtonClicked">#303f9f</drawable>
-    <drawable name="homeButtonUnclicked">#3b4dc4</drawable>
+    <color name="homeButtonClicked">#1c255f</color>
+    <color name="homeButtonUnclicked">#303f9f</color>
+    <color name="logChoiceButtonUnclicked">#fcfcfc</color>
+    <color name="logChoiceButtonClicked">#dddddd</color>
+
+    <drawable name="homeButtonClicked">#1c255f</drawable>
+    <drawable name="homeButtonUnclicked">#303f9f</drawable>
     <color name="colorButtonUnclicked">#ffd6d7d7</color>
     <color name="colorButtonTextClicked">#FFFFFFFF</color>
     <color name="colorButtonTextUnclicked">#000000</color>

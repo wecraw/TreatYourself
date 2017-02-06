@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/listViewTodos"
-        android:background="@drawable/nothing_to_do" />
+        android:id="@+id/listViewTodos" />
     <Button
         android:layout_width="match_parent"
         android:id="@+id/buttonConfirm"

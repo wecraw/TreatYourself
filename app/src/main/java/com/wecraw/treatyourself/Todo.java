@@ -13,10 +13,9 @@ public class Todo {
 
     public Todo() {}
 
-    public Todo(String name, int value, int id, long timeCreated) {
+    public Todo(String name, int value, long timeCreated) {
         this.name = name;
         this.value = value;
-        this.id = id;
         this.timeCreated = timeCreated;
     }
 

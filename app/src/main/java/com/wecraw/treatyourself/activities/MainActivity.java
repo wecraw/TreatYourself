@@ -12,7 +12,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.wecraw.treatyourself.DatabaseOperations;
+import com.wecraw.treatyourself.Event;
+import com.wecraw.treatyourself.GlobalConstants;
 import com.wecraw.treatyourself.R;
+import com.wecraw.treatyourself.Todo;
 import com.wecraw.treatyourself.User;
 
 import java.util.List;
@@ -26,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonTodo;
     private User user;
 
-
     DatabaseOperations db = new DatabaseOperations(this);
-
 
     final String welcomeScreenShownPref = "welcomeScreenShown";
 
@@ -38,24 +39,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //used to show welcome/signup screen on first launch
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        // second argument is the default to use if the preference can't be found
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
-
         //instead of using prefs, app will just send to welcome screen if no users exist.
         List<User> temp = db.getAllUsers();
         if (temp.size()==0) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
+            long time = System.currentTimeMillis();
 
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.putBoolean(welcomeScreenShownPref, true);
-            editor.apply(); // Very important to save the preference
-            //user editor.commit(); if this gets weird
+            db.addNewEvent(new Event("Lecture",true,true,GlobalConstants.VALUE_MID,time));
+            db.addNewEvent(new Event("Walking",true,true,GlobalConstants.VALUE_LOW,time));
+            db.addNewEvent(new Event("Running",true,true,GlobalConstants.VALUE_HIGH,time));
+            db.addNewEvent(new Event("Homework",true,true,GlobalConstants.VALUE_MID,time));
+            db.addNewEvent(new Event("Pregame",false,false,GlobalConstants.VALUE_HIGH,time));
+            db.addNewEvent(new Event("Video Games",true,false,GlobalConstants.VALUE_MID,time));
+            db.addNewTodo(new Todo("Download Treat Yourself",GlobalConstants.VALUE_LOW,time));
+            temp.clear();
+            temp =  db.getAllUsers();
         }
-
 
         buttonLogEvent = (Button) findViewById(R.id.buttonLogEvent);
         buttonUserDetail = (Button) findViewById(R.id.buttonUserDetail);
@@ -71,19 +71,19 @@ public class MainActivity extends AppCompatActivity {
         myTypeface = Typeface.createFromAsset(getAssets(), "fonts/hey_font.ttf");
         textViewUserName.setTypeface(myTypeface);
 
-
-
         if (temp.size()!=0)
             textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
 
     }
 
-    //refreshes activity, mostly important for when a new user is created
+    //refreshes activity, mostly important for when a new username is created
     @Override
     public void onResume() {
         super.onResume();
         //Refresh your stuff here
-        textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
+        List<User> temp = db.getAllUsers();
+        if (temp.size()>0)
+            textViewUserName.setText("Hey "+ db.getUser(1).getName() + "! ");
     }
 
 

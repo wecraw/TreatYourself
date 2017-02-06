@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_boosted_choice"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.wecraw.treatyourself.activities.BoostedChoiceActivity">
+
+
+    <Button
+        android:text="Boost Productivity!"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/buttonBoost"
+        android:background="@drawable/log_choice_button_background"
+        android:textSize="30sp" />
+
+    <Button
+        android:text="Log Existing Event!"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/buttonLog"
+        android:background="@drawable/boosted_choice_button_background"
+        android:textColor="@color/colorButtonTextClicked"
+        android:textSize="30sp" />
+</LinearLayout>

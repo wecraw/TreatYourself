@@ -22,7 +22,8 @@
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.UserLogActivity" />
         <activity android:name=".activities.TodoListActivity" />
-        <activity android:name=".activities.NewTodoActivity"></activity>
+        <activity android:name=".activities.NewTodoActivity" />
+        <activity android:name=".activities.BoostedChoiceActivity"></activity>
     </application>
 
 </manifest>
