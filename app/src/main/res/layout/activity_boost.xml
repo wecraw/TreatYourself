@@ -1,0 +1,111 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    tools:context="com.wecraw.treatyourself.BoostProductivityActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <ProgressBar
+        android:id="@+id/fullscreen_content"
+        android:layout_width="100dp"
+        android:onClick="pauseActivity"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/buttonGo"
+        android:text="Go!"
+        android:textColor="@android:color/white"
+        android:onClick="beginActivity"
+        android:width="100dp"
+        android:height="100dp"
+        android:background="@drawable/round_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        />
+    <ImageView
+        android:layout_gravity="center"
+        android:onClick="pauseActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/pause"
+        android:visibility="gone"
+        android:id="@+id/imageViewPause" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Biking"
+            android:layout_width="match_parent"
+            android:id="@+id/textViewEventName"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="72sp" />
+
+        <TextView
+            android:text="10 Points per minute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPointsPerMinute"
+            android:textAlignment="center"
+
+            android:textSize="18sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            ></View>
+
+        <TextView
+            android:text="0:00:00"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:textSize="40sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTimer"
+            android:textAlignment="center" />
+        <TextView
+            android:text="+2 points"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:textSize="30sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTotalPoints"
+            android:textAlignment="center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:text="@string/finish_boosted"
+            android:textAllCaps="false"
+            android:id="@+id/buttonFinish"
+            android:onClick="finishEvent"
+            android:textSize="24sp"
+            android:layout_height="75dp" />
+
+
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

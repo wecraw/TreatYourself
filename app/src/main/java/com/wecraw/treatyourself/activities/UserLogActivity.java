@@ -137,9 +137,15 @@ public class UserLogActivity extends AppCompatActivity {
 
             view.name.setText(logEntry.getName());
             if (logEntry.isTimed()){
-                view.duration.setText(Integer.toString(logEntry.getDuration())+" minutes");
+                if (logEntry.getDuration()==1){
+                    view.duration.setText(Integer.toString(logEntry.getDuration())+" minute");
+                } else {
+                    view.duration.setText(Integer.toString(logEntry.getDuration())+" minutes");
+                }
+            } else if (logEntry.isTodo()){
+                view.duration.setText("Completed Todo");
             } else {
-                view.duration.setText("");
+                view.duration.setText("Completed Activity");
             }
             if (logEntry.isEarns()){
                 view.value.setText("+"+logEntry.getValue());

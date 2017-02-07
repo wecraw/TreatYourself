@@ -247,7 +247,7 @@ public class TodoListActivity extends AppCompatActivity {
         for (int i=0; i<lv.getAdapter().getCount(); i++){
             if (lv.isItemChecked(i))
                 todo = todos.get(i);
-                logEntry = new LogEntry(todo.getName(),todo.getTimeCreated(), true, false, 0, todo.getValue());
+                logEntry = new LogEntry(todo.getName(),todo.getTimeCreated(), true, false, 0, todo.getValue(),true);
                 db.addNewLogEntry(logEntry);
                 db.deleteTodo(todo);
         }

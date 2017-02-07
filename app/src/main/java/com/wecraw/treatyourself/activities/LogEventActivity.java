@@ -108,8 +108,12 @@ public class LogEventActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String eventName = names.get(position);
                 int eventID = ids.get(position);
-
-                Intent intent = new Intent(LogEventActivity.this, BoostedChoiceActivity.class);
+                Intent intent;
+                if (db.getEvent(eventID).isTimed() && db.getEvent(eventID).isEarns()){
+                    intent = new Intent(LogEventActivity.this, BoostedChoiceActivity.class);
+                } else {
+                    intent = new Intent(LogEventActivity.this, EventDetailActivity.class);
+                }
                 intent.putExtra("event id", eventID);
                 startActivity(intent);
 

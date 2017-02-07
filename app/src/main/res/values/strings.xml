@@ -9,6 +9,7 @@
     <string name="untimed_spends_value">How many points does this activity cost?</string>
     <string name="timed_spends_value">How many points does 30 minutes is this activity cost?</string>
     <string name="timed_earns_value">How many points is 30 minutes of this activity worth?</string>
+    <string name="value_explain">(Per 30 Minutes)</string>
     <string name="success_message">Success! Created activity with:</string>
     <string name="success_title">Success</string>
     <string name="welcome">Welcome to Treat Yourself!</string>
@@ -23,6 +24,8 @@
     <string name="your_profile">Your Profile</string>
     <string name="view_log">View Log</string>
     <string name="todo_list_title">Your Todo List</string>
+    <string name="boosted_choice">Boost Productivity!\n(x2 Points)</string>
+    <string name="log_choice">Log Completed Event!</string>
     <string name="undo_last_event">Undo Last Entry</string>
     <string name="new_event">New Event</string>
     <string name="todo_list">Todo List</string>
@@ -33,4 +36,13 @@
     <string name="edit_event_title">Edit Event</string>
     <string name="todo_value_explain">How many points is this task worth?</string>
     <string name="quick_event_detail">Quick events will be logged but not saved for future use! If you\'d like to create a reusable event, add a new event instead.</string>
+    <string name="points_per_minute">%.2f points per minute</string>
+    <string name="boost_total_points" formatted="false">+%1$d point%2$s</string>
+    <string name="title_activity_boost_productivity">BoostProductivityActivity</string>
+    <string name="finish_boosted">Finish and log</string>
+    <string name="radio_points" formatted="false">%d Points</string>
+    <string name="reset">Reset</string>
+    <string name="about">About</string>
+    <string name="terms">Terms of Use</string>
+    <string name="contact">Contact Us</string>
 </resources>

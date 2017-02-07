@@ -23,7 +23,18 @@
         <activity android:name=".activities.UserLogActivity" />
         <activity android:name=".activities.TodoListActivity" />
         <activity android:name=".activities.NewTodoActivity" />
-        <activity android:name=".activities.BoostedChoiceActivity"></activity>
+        <activity
+            android:name=".activities.BoostedChoiceActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".BoostProductivityActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_boost_productivity"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".BoostActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.TermsOfUseActivity" />
+        <activity android:name=".activities.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -9,21 +9,23 @@
 
 
     <Button
-        android:text="Boost Productivity!"
+        android:text="@string/boosted_choice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/buttonBoost"
         android:background="@drawable/log_choice_button_background"
-        android:textSize="30sp" />
+        android:onClick="boostProductivity"
+        android:textSize="24sp" />
 
     <Button
-        android:text="Log Existing Event!"
+        android:text="@string/log_choice"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/buttonLog"
+        android:onClick="logExisting"
         android:background="@drawable/boosted_choice_button_background"
         android:textColor="@color/colorButtonTextClicked"
-        android:textSize="30sp" />
+        android:textSize="24sp" />
 </LinearLayout>

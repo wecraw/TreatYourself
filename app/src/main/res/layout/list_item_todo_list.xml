@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="100dp" android:descendantFocusability="blocksDescendants"
-    android:padding="10dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:descendantFocusability="blocksDescendants"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox"
-        android:layout_centerVertical="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_gravity="center_vertical"
+        />
 
     <TextView
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:id="@+id/textViewListItemName"
+        android:layout_weight="1"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="row number"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_toRightOf="@+id/checkBox"
-        android:layout_toEndOf="@+id/checkBox" />
+         />
 
     <ImageButton
-
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:id="@+id/imageButtonListItemOptions"
@@ -35,9 +33,7 @@
         android:layout_width="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_alignBottom="@+id/textViewListItemName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        />
 
 
-</RelativeLayout>
+</LinearLayout>

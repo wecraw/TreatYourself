@@ -113,7 +113,6 @@ public class EventDetailActivity extends AppCompatActivity {
         textViewMinutesPerformed = (TextView) findViewById(R.id.textViewMinutesPerformed);
 
 
-
         editTextTime = (EditText) findViewById(R.id.editTextTime);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 

@@ -4,11 +4,12 @@
     android:id="@+id/activity_user_log"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.wecraw.treatyourself.activities.UserLogActivity">
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    tools:context="com.wecraw.treatyourself.activities.UserLogActivity"
+    android:paddingEnd="5dp"
+    android:paddingStart="5dp">
 
     <ListView
         android:layout_width="match_parent"

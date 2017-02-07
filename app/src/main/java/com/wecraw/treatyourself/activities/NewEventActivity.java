@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -37,18 +38,18 @@ public class NewEventActivity extends AppCompatActivity {
     private Button buttonUntimed;
     private Button buttonEarns;
     private Button buttonSpends;
+    private Button buttonEasy;
+    private Button buttonMedium;
+    private Button buttonHard;
     private TextView value_explain;
     private TextView quick_event_explain;
-    private Spinner spinnerValue;
     private Event event;
     private boolean update = false;
     private boolean quickEvent = false;
-
+    private int value = GlobalConstants.VALUE_LOW;
 
     private static boolean timed = true;
     private static boolean earns = true;
-
-
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -67,8 +68,6 @@ public class NewEventActivity extends AppCompatActivity {
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,17 +79,26 @@ public class NewEventActivity extends AppCompatActivity {
         buttonTimed = (Button) findViewById(R.id.buttonTimed);
         buttonUntimed = (Button) findViewById(R.id.buttonUntimed);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        buttonEasy = (Button) findViewById(R.id.buttonEasy);
+        buttonMedium = (Button) findViewById(R.id.buttonMedium);
+        buttonHard = (Button) findViewById(R.id.buttonHard);
+
+        buttonEasy.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_LOW));
+        buttonMedium.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_MID));
+        buttonHard.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_HIGH));
+
         value_explain = (TextView) findViewById(R.id.value_explain);
         quick_event_explain = (TextView) findViewById(R.id.textViewQuickEventExplain);
 
-        //setting up the spinner
-        spinnerValue = (Spinner) findViewById(R.id.spinnerValue);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.points_array, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerValue.setAdapter(adapter);
+        buttonTimed.setEnabled(false);
+        buttonUntimed.setEnabled(false);
+        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
+        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
+        buttonUntimed.setEnabled(false);
 
         etName.addTextChangedListener(textWatcher);
+
+        deactivateRadioButtons();
 
         //handles extras if this activity is launched from the edit dialogue of LogEventActivity
         //or when the event is a quick event
@@ -108,15 +116,15 @@ public class NewEventActivity extends AppCompatActivity {
                 int eventID = extras.getInt("event id");
                 event = db.getEvent(eventID);
 
-                //sets name edittext, spinner, button positions, submit button text
+                //sets name edittext, button positions, submit button text
                 etName.setText(event.getName());
 
                 if (event.getValue() == GlobalConstants.VALUE_LOW) {
-                    spinnerValue.setSelection(0);
+                    easy(buttonEasy);
                 } else if (event.getValue() == GlobalConstants.VALUE_MID) {
-                    spinnerValue.setSelection(1);
+                    medium(buttonMedium);
                 } else if (event.getValue() == GlobalConstants.VALUE_HIGH) {
-                    spinnerValue.setSelection(2);
+                    hard(buttonHard);
                 }
 
                 if (event.isEarns()) {
@@ -131,6 +139,7 @@ public class NewEventActivity extends AppCompatActivity {
                 }
 
                 buttonSubmit.setText(R.string.update);
+                buttonSubmit.setEnabled(true);
 
                 //used when submitting an update to existing entry
                 update = true;
@@ -142,11 +151,6 @@ public class NewEventActivity extends AppCompatActivity {
         } else { //if there aren't any extras, it's a plain new event, set action bar text accordingly
             setTitle(getString(R.string.new_event_title));
         }
-
-
-
-
-
 
     }
 
@@ -165,8 +169,6 @@ public class NewEventActivity extends AppCompatActivity {
 
         //parse name and value fields for their values
         String name = etName.getText().toString();
-        String stringValue = spinnerValue.getSelectedItem().toString();
-        int value = Integer.parseInt(stringValue.replaceAll("[\\D]", ""));
 
         //if new event, gets system time, otherwise uses the original creation time
         long time;
@@ -203,10 +205,10 @@ public class NewEventActivity extends AppCompatActivity {
         }
 
     }
-
-
     //code for 'radio' button behavior
     public void earns(View view) {
+
+        deactivateRadioButtons();
 
         buttonEarns.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
         buttonEarns.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
@@ -214,26 +216,22 @@ public class NewEventActivity extends AppCompatActivity {
         buttonSpends.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonSpends.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-        if (timed){
-            value_explain.setText(R.string.timed_earns_value);
-        } else {
-            value_explain.setText(R.string.untimed_earns_value);
-        }
+        buttonTimed.setEnabled(false);
+        buttonUntimed.setEnabled(false);
 
         earns=true;
     }
     public void spends(View view) {
+        activateRadioButtons();
+
         buttonSpends.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
         buttonSpends.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
         buttonEarns.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonEarns.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-        if (timed){
-            value_explain.setText(R.string.timed_spends_value);
-        } else {
-            value_explain.setText(R.string.untimed_spends_value);
-        }
+        buttonTimed.setEnabled(true);
+        buttonUntimed.setEnabled(true);
 
         earns=false;
     }
@@ -244,14 +242,7 @@ public class NewEventActivity extends AppCompatActivity {
         buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonUntimed.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-
-        if (earns){
-            value_explain.setText(R.string.timed_earns_value);
-        } else {
-            value_explain.setText(R.string.timed_spends_value);
-        }
-
-
+        value_explain.setText(R.string.value_explain);
 
         timed=true;
     }
@@ -263,24 +254,66 @@ public class NewEventActivity extends AppCompatActivity {
         buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
         buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
-        if (earns){
-            value_explain.setText(R.string.untimed_earns_value);
-        } else {
-            value_explain.setText(R.string.untimed_spends_value);
-        }
+        value_explain.setText("");
 
         timed=false;
     }
 
+    public void easy(View view){
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
+        value = GlobalConstants.VALUE_LOW;
+    }
+    public void medium(View view){
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
+        value = GlobalConstants.VALUE_MID;
+    }
+    public void hard(View view){
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
 
+        value = GlobalConstants.VALUE_HIGH;
+    }
 
+    public void activateRadioButtons(){
 
+        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClicked));
+        buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_clicked));
+        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonUnclicked));
+        buttonUntimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_unclicked));
 
+        buttonTimed.setEnabled(true);
+        buttonUntimed.setEnabled(true);
+    }
+    public void deactivateRadioButtons(){
 
+        timed(buttonTimed);
+
+        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
+        buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_clicked_disabled));
+        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonUnclickedDisabled));
+        buttonUntimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_unclicked_disabled));
+
+        buttonTimed.setEnabled(false);
+        buttonUntimed.setEnabled(false);
+    }
 
 }

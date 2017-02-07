@@ -3,6 +3,9 @@ package com.wecraw.treatyourself.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +30,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
     DatabaseOperations db = new DatabaseOperations(this);
 
+    //for custom action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings_menu_bar, menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +50,11 @@ public class UserProfileActivity extends AppCompatActivity {
         //should prolly replace with some sort of 'active user' variable
 
         editTextName.setText(user.getName());
-        textViewPoints.setText(Long.toString(user.getPoints()));
+        if (user.getPoints()==1){
+            textViewPoints.setText(Long.toString(user.getPoints())+"point");
+        } else {
+            textViewPoints.setText(Long.toString(user.getPoints())+"points");
+        }
 
     }
 
@@ -49,7 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onResume();
         //Refresh your stuff here
         user = db.getUser(1);
-        textViewPoints.setText(Long.toString(user.getPoints()));
+        textViewPoints.setText(Long.toString(user.getPoints())+" points");
     }
 
     //saves user name
@@ -62,6 +77,14 @@ public class UserProfileActivity extends AppCompatActivity {
     public void viewLog(View view) {
         Intent intent = new Intent(this, UserLogActivity.class);
         startActivity(intent);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent = new Intent(UserProfileActivity.this, SettingsActivity.class);
+        startActivity(intent);
+
+        return true;
     }
 
 }

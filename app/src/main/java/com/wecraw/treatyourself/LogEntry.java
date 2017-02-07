@@ -10,9 +10,19 @@ public class LogEntry {
     private long timeCreated;
     private Boolean earns;
     private Boolean timed;
+    private Boolean todo;
     private int value;
     private int duration; //in minutes
 
+    public LogEntry(String name, long timeCreated, Boolean earns, Boolean timed, int duration, int value, Boolean todo) {
+        this.name = name;
+        this.timeCreated = timeCreated;
+        this.earns = earns;
+        this.timed = timed;
+        this.todo = todo;
+        this.duration = duration;
+        this.value = value;
+    }
     public LogEntry(String name, long timeCreated, Boolean earns, Boolean timed, int duration, int value) {
         this.name = name;
         this.timeCreated = timeCreated;
@@ -20,6 +30,7 @@ public class LogEntry {
         this.timed = timed;
         this.duration = duration;
         this.value = value;
+        this.todo = false;
     }
 
     public LogEntry() {}
@@ -46,6 +57,14 @@ public class LogEntry {
 
     public void setEarns(Boolean earns) {
         this.earns = earns;
+    }
+
+    public Boolean isTodo() {
+        return todo;
+    }
+
+    public void setTodo(Boolean todo) {
+        this.todo = todo;
     }
 
     public Boolean isTimed() {

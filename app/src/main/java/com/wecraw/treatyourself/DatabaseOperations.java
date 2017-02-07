@@ -27,6 +27,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
     public static final String TIME_CREATED = "Time_Created";
     public static final String POINTS = "Points";
     public static final String DURATION = "Duration";
+    public static final String TODO = "IsTodo";
 
     public static final String DATABASE_NAME = "User_Info";
     public static final String TABLE_TODO_DETAIL = "Todo_Info";
@@ -37,7 +38,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
     private static final String[] COLUMNS_TODO = {ID,NAME,VALUE,TIME_CREATED};
     private static final String[] COLUMNS_EVENT = {ID,NAME,TIMED,EARNS,VALUE,TIME_CREATED};
     private static final String[] COLUMNS_USER = {ID,NAME,POINTS,TIME_CREATED};
-    private static final String[] COLUMNS_LOGENTRY = {ID,NAME,TIME_CREATED,EARNS,TIMED,DURATION,VALUE};
+    private static final String[] COLUMNS_LOGENTRY = {ID,NAME,TIME_CREATED,EARNS,TIMED,DURATION,VALUE,TODO};
 
 
     public DatabaseOperations(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION);}
@@ -66,7 +67,8 @@ public class DatabaseOperations extends SQLiteOpenHelper {
                 + EARNS + " INTEGER,"
                 + TIMED + " INTEGER,"
                 + DURATION + " INTEGER,"
-                + VALUE + " INTEGER )";
+                + VALUE + " INTEGER,"
+                + TODO + " INTEGER )";
 
         String CREATE_TODO_DETAIL_TABLE = "CREATE TABLE " + TABLE_TODO_DETAIL + " ( "
                 + ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -308,6 +310,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         values.put(TIMED, logEntry.isTimed());
         values.put(DURATION, logEntry.getDuration());
         values.put(VALUE, logEntry.getValue());
+        values.put(TODO, logEntry.isTodo());
         //inserting row
         db.insert(TABLE_LOGENTRY_DETAIL, null, values);
         db.close(); //closes database connection
@@ -330,6 +333,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         logEntry.setTimed(cursor.getInt(4)>0);
         logEntry.setDuration(cursor.getInt(5));
         logEntry.setValue(cursor.getInt(6));
+        logEntry.setTodo(cursor.getInt(7)>0);
 
         Log.d("getLogEntry("+id+")", logEntry.toString());
 
@@ -361,6 +365,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
                 logEntry.setTimed(cursor.getInt(4)>0);
                 logEntry.setDuration(cursor.getInt(5));
                 logEntry.setValue(cursor.getInt(6));
+                logEntry.setTodo(cursor.getInt(7)>0);
 
                 logEntries.add(logEntry);
             } while (cursor.moveToNext());

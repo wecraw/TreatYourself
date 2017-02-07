@@ -1,6 +1,7 @@
 package com.wecraw.treatyourself.activities;
 
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,8 +21,11 @@ import com.wecraw.treatyourself.Todo;
 public class NewTodoActivity extends AppCompatActivity {
 
     EditText editTextName;
-    Spinner spinnerValue;
     Button buttonSubmit;
+    private Button buttonEasy;
+    private Button buttonMedium;
+    private Button buttonHard;
+    int value=GlobalConstants.VALUE_LOW;
     Todo todo;
     boolean update = false;
 
@@ -44,9 +48,15 @@ public class NewTodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_todo);
-        spinnerValue = (Spinner) findViewById(R.id.spinnerValue);
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+        buttonEasy = (Button) findViewById(R.id.buttonEasy);
+        buttonMedium = (Button) findViewById(R.id.buttonMedium);
+        buttonHard = (Button) findViewById(R.id.buttonHard);
+
+        buttonEasy.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_LOW));
+        buttonMedium.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_MID));
+        buttonHard.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_HIGH));
 
         //handles editing
         Bundle extras = getIntent().getExtras();
@@ -54,20 +64,15 @@ public class NewTodoActivity extends AppCompatActivity {
             todo = db.getTodo(extras.getInt("todo id"));
             editTextName.setText(todo.getName());
             if (todo.getValue() == GlobalConstants.VALUE_LOW) {
-                spinnerValue.setSelection(0);
+                easy(buttonEasy);
             } else if (todo.getValue() == GlobalConstants.VALUE_MID) {
-                spinnerValue.setSelection(1);
+                medium(buttonMedium);
             } else if (todo.getValue() == GlobalConstants.VALUE_HIGH) {
-                spinnerValue.setSelection(2);
+                hard(buttonHard);
             }
             update = true;
+            buttonSubmit.setEnabled(true);
         }
-
-        //setting up spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.points_array, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerValue.setAdapter(adapter);
 
         editTextName.addTextChangedListener(textWatcher);
     }
@@ -77,9 +82,6 @@ public class NewTodoActivity extends AppCompatActivity {
             todo = new Todo();
 
         todo.setName(editTextName.getText().toString());
-
-        String stringValue = spinnerValue.getSelectedItem().toString();
-        int value = Integer.parseInt(stringValue.replaceAll("[\\D]", ""));
         todo.setValue(value);
 
         Long time = System.currentTimeMillis();
@@ -98,5 +100,38 @@ public class NewTodoActivity extends AppCompatActivity {
         } else {
             buttonSubmit.setEnabled(true);
         }
+    }
+    public void easy(View view){
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
+
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+
+        value = GlobalConstants.VALUE_LOW;
+    }
+    public void medium(View view){
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
+
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+
+        value = GlobalConstants.VALUE_MID;
+    }
+    public void hard(View view){
+        buttonHard.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
+        buttonHard.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
+
+        buttonEasy.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonEasy.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+        buttonMedium.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonUnclicked));
+        buttonMedium.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextUnclicked));
+
+        value = GlobalConstants.VALUE_HIGH;
     }
 }
