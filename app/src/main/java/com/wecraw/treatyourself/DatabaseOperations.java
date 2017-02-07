@@ -501,4 +501,11 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         return todo;
 
     }
+
+    public void deleteAll(String TABLE_NAME){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,null,null);
+        db.close();
+
+    }
 }

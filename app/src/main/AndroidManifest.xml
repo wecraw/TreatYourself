@@ -18,7 +18,8 @@
         <activity android:name=".activities.LogEventActivity" />
         <activity android:name=".activities.NewEventActivity" />
         <activity android:name=".activities.EventDetailActivity" />
-        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.WelcomeActivity"
+            android:noHistory="true"/>
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.UserLogActivity" />
         <activity android:name=".activities.TodoListActivity" />
@@ -26,15 +27,11 @@
         <activity
             android:name=".activities.BoostedChoiceActivity"
             android:noHistory="true" />
-        <activity
-            android:name=".BoostProductivityActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_boost_productivity"
-            android:theme="@style/FullscreenTheme" />
         <activity android:name=".BoostActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.TermsOfUseActivity" />
-        <activity android:name=".activities.AboutActivity"></activity>
+        <activity android:name=".activities.AboutActivity" />
+        <activity android:name=".activities.ResetActivity"></activity>
     </application>
 
 </manifest>

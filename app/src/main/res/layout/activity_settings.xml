@@ -19,17 +19,8 @@
         android:id="@+id/buttonAbout" />
 
     <Button
-        android:text="@string/contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonContact" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"></View>
-
-    <Button
         android:text="Reset"
+        android:onClick="reset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonReset" />

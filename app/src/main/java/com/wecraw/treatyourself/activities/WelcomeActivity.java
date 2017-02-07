@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.wecraw.treatyourself.DatabaseOperations;
+import com.wecraw.treatyourself.Event;
+import com.wecraw.treatyourself.GlobalConstants;
 import com.wecraw.treatyourself.R;
+import com.wecraw.treatyourself.Todo;
 import com.wecraw.treatyourself.User;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -62,6 +65,14 @@ public class WelcomeActivity extends AppCompatActivity {
         User newUser = new User(name, 0, time);
 
         db.addNewUser(newUser);
+
+        db.addNewEvent(new Event("Lecture",true,true, GlobalConstants.VALUE_MID,time));
+        db.addNewEvent(new Event("Walking",true,true,GlobalConstants.VALUE_LOW,time));
+        db.addNewEvent(new Event("Running",true,true,GlobalConstants.VALUE_HIGH,time));
+        db.addNewEvent(new Event("Homework",true,true,GlobalConstants.VALUE_MID,time));
+        db.addNewEvent(new Event("Watch a Movie",false,false,GlobalConstants.VALUE_HIGH,time));
+        db.addNewEvent(new Event("Play Video Games",true,false,GlobalConstants.VALUE_MID,time));
+        db.addNewTodo(new Todo("Download Treat Yourself",GlobalConstants.VALUE_LOW,time));
 
         finish();
 

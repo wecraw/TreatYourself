@@ -27,6 +27,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setImage(R.drawable.ty_about_logo)
                 .setDescription("a Productivity Booster by Will Crawford")
                 .addItem(versionElement)
+                .addEmail("wecraw.industries@gmail.com")
                 .create();
 
         setContentView(aboutPage);

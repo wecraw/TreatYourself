@@ -22,7 +22,7 @@
     <string name="confirm_delete" formatted="false">Are you sure you\'d like to delete the event \"%1$s\"?</string>
     <string name="confirm_todo" formatted="false">Nice! Confirm %1$d event%2$s (+%3$d points)</string>
     <string name="your_profile">Your Profile</string>
-    <string name="view_log">View Log</string>
+    <string name="view_log">View Activity Log</string>
     <string name="todo_list_title">Your Todo List</string>
     <string name="boosted_choice">Boost Productivity!\n(x2 Points)</string>
     <string name="log_choice">Log Completed Event!</string>

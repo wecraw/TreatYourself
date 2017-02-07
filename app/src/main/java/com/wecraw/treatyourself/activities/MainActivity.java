@@ -44,15 +44,8 @@ public class MainActivity extends AppCompatActivity {
         if (temp.size()==0) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
-            long time = System.currentTimeMillis();
 
-            db.addNewEvent(new Event("Lecture",true,true,GlobalConstants.VALUE_MID,time));
-            db.addNewEvent(new Event("Walking",true,true,GlobalConstants.VALUE_LOW,time));
-            db.addNewEvent(new Event("Running",true,true,GlobalConstants.VALUE_HIGH,time));
-            db.addNewEvent(new Event("Homework",true,true,GlobalConstants.VALUE_MID,time));
-            db.addNewEvent(new Event("Pregame",false,false,GlobalConstants.VALUE_HIGH,time));
-            db.addNewEvent(new Event("Video Games",true,false,GlobalConstants.VALUE_MID,time));
-            db.addNewTodo(new Todo("Download Treat Yourself",GlobalConstants.VALUE_LOW,time));
+
             temp.clear();
             temp =  db.getAllUsers();
         }

@@ -19,4 +19,8 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this,AboutActivity.class);
         startActivity(intent);
     }
+    public void reset(View v){
+        Intent intent = new Intent(SettingsActivity.this,ResetActivity.class);
+        startActivity(intent);
+    }
 }
