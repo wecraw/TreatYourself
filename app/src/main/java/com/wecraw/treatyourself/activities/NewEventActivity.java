@@ -127,16 +127,19 @@ public class NewEventActivity extends AppCompatActivity {
                     hard(buttonHard);
                 }
 
-                if (event.isEarns()) {
-                    earns(buttonEarns);
-                } else {
-                    spends(buttonSpends);
-                }
+
                 if (event.isTimed()) {
                     timed(buttonTimed);
                 } else {
                     untimed(buttonUntimed);
                 }
+                if (event.isEarns()) {
+                    earns(buttonEarns);
+
+                } else {
+                    spends(buttonSpends);
+                }
+
 
                 buttonSubmit.setText(R.string.update);
                 buttonSubmit.setEnabled(true);
@@ -236,6 +239,7 @@ public class NewEventActivity extends AppCompatActivity {
         earns=false;
     }
     public void timed(View view) {
+
         buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
         buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
