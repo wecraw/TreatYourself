@@ -10,6 +10,7 @@
     <string name="timed_spends_value">How many points does 30 minutes is this activity cost?</string>
     <string name="timed_earns_value">How many points is 30 minutes of this activity worth?</string>
     <string name="value_explain">(Per 30 Minutes)</string>
+    <string name="activities">Activities</string>
     <string name="success_message">Success! Created activity with:</string>
     <string name="success_title">Success</string>
     <string name="welcome">Welcome to Treat Yourself!</string>

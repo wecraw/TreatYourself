@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* Called when the user clicks the Log Event button */
     public void logEvent(View view) {
-        Intent intent = new Intent(this, LogEventActivity.class);
+        Intent intent = new Intent(this, EarnPointsActivity.class);
         startActivity(intent);
     }
     public void yourProfile(View view) {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void todo(View view) {
-        Intent intent = new Intent(this, TodoListActivity.class);
+        Intent intent = new Intent(this, SpendPointsActivity.class);
         startActivity(intent);
     }
 

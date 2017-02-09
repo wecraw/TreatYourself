@@ -48,6 +48,9 @@ public class NewTodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_todo);
+
+        setTitle("New Todo");
+
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonEasy = (Button) findViewById(R.id.buttonEasy);

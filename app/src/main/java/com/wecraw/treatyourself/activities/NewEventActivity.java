@@ -41,6 +41,7 @@ public class NewEventActivity extends AppCompatActivity {
     private Button buttonEasy;
     private Button buttonMedium;
     private Button buttonHard;
+    private LinearLayout llTimedUntimed;
     private TextView value_explain;
     private TextView quick_event_explain;
     private Event event;
@@ -82,6 +83,7 @@ public class NewEventActivity extends AppCompatActivity {
         buttonEasy = (Button) findViewById(R.id.buttonEasy);
         buttonMedium = (Button) findViewById(R.id.buttonMedium);
         buttonHard = (Button) findViewById(R.id.buttonHard);
+        llTimedUntimed = (LinearLayout) findViewById(R.id.timed_untimed_row);
 
         buttonEasy.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_LOW));
         buttonMedium.setText(String.format(getString(R.string.radio_points),GlobalConstants.VALUE_MID));
@@ -90,27 +92,23 @@ public class NewEventActivity extends AppCompatActivity {
         value_explain = (TextView) findViewById(R.id.value_explain);
         quick_event_explain = (TextView) findViewById(R.id.textViewQuickEventExplain);
 
-        buttonTimed.setEnabled(false);
-        buttonUntimed.setEnabled(false);
-        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
-        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
-        buttonUntimed.setEnabled(false);
-
         etName.addTextChangedListener(textWatcher);
 
-        deactivateRadioButtons();
+        setTitle("New Event"); //this shouldn't be overridden unless it's an update or quick event
 
-        //handles extras if this activity is launched from the edit dialogue of LogEventActivity
-        //or when the event is a quick event
+        //handles extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+
             //if the intent has the extra quickevent, it wont have any others
             if (getIntent().hasExtra("quickEvent")) {
                 quickEvent = extras.getBoolean("quickEvent");
+
                 setTitle(getString(R.string.quick_event_title));
                 quick_event_explain.setVisibility(View.VISIBLE);
-
-            } else {
+            }
+            if (getIntent().hasExtra("update")){
+                update=true;
 
                 //get event
                 int eventID = extras.getInt("event id");
@@ -127,7 +125,6 @@ public class NewEventActivity extends AppCompatActivity {
                     hard(buttonHard);
                 }
 
-
                 if (event.isTimed()) {
                     timed(buttonTimed);
                 } else {
@@ -140,21 +137,20 @@ public class NewEventActivity extends AppCompatActivity {
                     spends(buttonSpends);
                 }
 
-
                 buttonSubmit.setText(R.string.update);
                 buttonSubmit.setEnabled(true);
 
-                //used when submitting an update to existing entry
-                update = true;
-
                 setTitle(getString(R.string.edit_event_title));
-
             }
+            earns=extras.getBoolean("earns");
 
-        } else { //if there aren't any extras, it's a plain new event, set action bar text accordingly
-            setTitle(getString(R.string.new_event_title));
         }
 
+        //hide timed/untimed if event earns and set timed
+        if (earns) {
+            llTimedUntimed.setVisibility(View.GONE);
+            timed = true;
+        }
     }
 
     //checks to see if any text fields are empty and if any are, the submit button is disabled
@@ -211,8 +207,6 @@ public class NewEventActivity extends AppCompatActivity {
     //code for 'radio' button behavior
     public void earns(View view) {
 
-        deactivateRadioButtons();
-
         buttonEarns.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
         buttonEarns.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
 
@@ -225,7 +219,6 @@ public class NewEventActivity extends AppCompatActivity {
         earns=true;
     }
     public void spends(View view) {
-        activateRadioButtons();
 
         buttonSpends.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonClicked));
         buttonSpends.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorButtonTextClicked));
@@ -297,27 +290,6 @@ public class NewEventActivity extends AppCompatActivity {
         value = GlobalConstants.VALUE_HIGH;
     }
 
-    public void activateRadioButtons(){
 
-        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClicked));
-        buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_clicked));
-        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonUnclicked));
-        buttonUntimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_unclicked));
-
-        buttonTimed.setEnabled(true);
-        buttonUntimed.setEnabled(true);
-    }
-    public void deactivateRadioButtons(){
-
-        timed(buttonTimed);
-
-        buttonTimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonClickedDisabled));
-        buttonTimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_clicked_disabled));
-        buttonUntimed.setBackgroundColor(ContextCompat.getColor(getBaseContext(),R.color.radioButtonUnclickedDisabled));
-        buttonUntimed.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.radio_button_text_color_unclicked_disabled));
-
-        buttonTimed.setEnabled(false);
-        buttonUntimed.setEnabled(false);
-    }
 
 }

@@ -12,7 +12,6 @@
     <color name="radioButtonUnclickedDisabled">#ececec</color>
     
     <color name="radioButtonUnclicked">#ffd6d7d7</color>
-
     <color name="colorAccent">#FF4081</color>
     <color name="colorButtonClicked">#303f9f</color>
     <color name="homeButtonClicked">#1c255f</color>
